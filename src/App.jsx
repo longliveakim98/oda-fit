@@ -3,6 +3,7 @@ import Hero from "./components/Hero";
 import Workout from "./components/Workout";
 import { useState } from "react";
 import { generateWorkout } from "./utils/functions";
+import * as motion from "motion/react-client";
 
 function App() {
   const [workout, setWorkout] = useState(null);
@@ -21,19 +22,23 @@ function App() {
     window.location.href = "#workout";
   };
   return (
-    <main className="flex flex-col min-h-screen text-sm text-white bg-gradient-to-r from-slate-800 to-slate-950 sm:text-base">
-      <Hero />
-      <Generator
-        poison={poison}
-        setPoison={setPoison}
-        muscles={muscles}
-        setMuscles={setMuscles}
-        goals={goals}
-        setGoals={setGoals}
-        updateWorkout={updateWorkout}
-      />
-      {workout && <Workout workout={workout} />}
-    </main>
+    <motion.main className="flex flex-col min-h-screen text-sm text-white sm:text-base bg-slate-950">
+      <motion.div>
+        <Hero />
+      </motion.div>
+      <motion.div>
+        <Generator
+          poison={poison}
+          setPoison={setPoison}
+          muscles={muscles}
+          setMuscles={setMuscles}
+          goals={goals}
+          setGoals={setGoals}
+          updateWorkout={updateWorkout}
+        />
+      </motion.div>
+      <motion.div>{workout && <Workout workout={workout} />}</motion.div>
+    </motion.main>
   );
 }
 

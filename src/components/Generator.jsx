@@ -70,7 +70,7 @@ const Generator = ({
         title={"Pick your poison"}
         description={"Select the workout you wish to endure"}
       />
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 ">
         {Object.keys(WORKOUTS).map((type, typeIndex) => {
           return (
             <button
