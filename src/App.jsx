@@ -4,6 +4,7 @@ import Workout from "./components/Workout";
 import { useState } from "react";
 import { generateWorkout } from "./utils/functions";
 import * as motion from "motion/react-client";
+import Test from "./components/Test";
 
 function App() {
   const [workout, setWorkout] = useState(null);
@@ -11,33 +12,34 @@ function App() {
   const [muscles, setMuscles] = useState([]);
   const [goals, setGoals] = useState("");
 
-  const updateWorkout = () => {
+  const updateWorkout = async () => {
     if (!poison || !muscles.length || !goals) {
       return;
     }
     let newWorkout = generateWorkout({ poison, muscles, goal: goals });
 
-    setWorkout(newWorkout);
+    await setWorkout(newWorkout);
 
-    window.location.href = "#workout";
+    if (workout) {
+      window.location.href = "#workout";
+    }
   };
   return (
     <motion.main className="flex flex-col min-h-screen text-sm text-white sm:text-base bg-slate-950">
-      <motion.div>
-        <Hero />
-      </motion.div>
-      <motion.div>
-        <Generator
-          poison={poison}
-          setPoison={setPoison}
-          muscles={muscles}
-          setMuscles={setMuscles}
-          goals={goals}
-          setGoals={setGoals}
-          updateWorkout={updateWorkout}
-        />
-      </motion.div>
-      <motion.div>{workout && <Workout workout={workout} />}</motion.div>
+      <Hero />
+      <Test />
+      <Generator
+        poison={poison}
+        setPoison={setPoison}
+        muscles={muscles}
+        setMuscles={setMuscles}
+        goals={goals}
+        setGoals={setGoals}
+        updateWorkout={updateWorkout}
+      />
+
+      {workout && <Workout workout={workout} />}
+      <div className="h-20" />
     </motion.main>
   );
 }

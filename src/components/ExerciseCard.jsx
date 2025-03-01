@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+
+import * as motion from "motion/react-client";
+import { AnimatePresence, useMotionValue } from "motion/react";
+import { animate } from "motion";
 
 const ExerciseCard = ({ exercise, i }) => {
   const [setsCompleted, setSetsCompleted] = useState(0);
@@ -43,11 +47,35 @@ const ExerciseCard = ({ exercise, i }) => {
           </div>
         ))}
         <button
-          className="flex flex-col p-2 rounded border-[1.5px] duration-200 border-solid border-blue-900 hover:border-blue-600 w-full"
+          className="flex flex-col p-2 rounded border-[1.5px] duration-200 border-solid border-blue-900 hover:border-blue-600 w-full  "
           onClick={handleSetIncrement}
         >
-          <h3 className="text-sm capitalize text-slate-400">Sets Completed</h3>
-          <p className="font-medium">{setsCompleted} / 5</p>
+          <motion.h3
+            key={setSetsCompleted}
+            initial={{ color: "gray" }}
+            animate={{
+              color: setsCompleted === 5 ? "green" : "gray",
+              scale: setsCompleted === 5 ? [1, 1.25, 1] : 1,
+            }}
+            transition={{ duration: 1 }}
+            className="text-sm capitalize "
+          >
+            Sets Completed
+          </motion.h3>
+
+          <p className="font-medium ">
+            <motion.span
+              key={setsCompleted}
+              initial={{ opacity: 0, x: 0 }}
+              animate={{ opacity: 1, x: [-40, 0] }}
+              exit={{ opacity: 0, x: [0, 40] }}
+              transition={{ duration: 1, ease: "easeInOut" }}
+              className="inline-block"
+            >
+              {setsCompleted}
+            </motion.span>{" "}
+            / 5
+          </p>
         </button>
       </div>
     </div>
