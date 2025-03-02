@@ -1,10 +1,11 @@
 import Generator from "./components/Generator";
 import Hero from "./components/Hero";
 import Workout from "./components/Workout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { generateWorkout } from "./utils/functions";
 import * as motion from "motion/react-client";
 import Test from "./components/Test";
+import { useScroll } from "motion/react";
 
 function App() {
   const [workout, setWorkout] = useState(null);
@@ -18,12 +19,16 @@ function App() {
     }
     let newWorkout = generateWorkout({ poison, muscles, goal: goals });
 
-    await setWorkout(newWorkout);
+    setWorkout(newWorkout);
+  };
 
+  useEffect(() => {
     if (workout) {
       window.location.href = "#workout";
     }
-  };
+  }, [workout]);
+
+  const { scrollYProgress } = useScroll();
   return (
     <motion.main className="flex flex-col min-h-screen text-sm text-white sm:text-base bg-slate-950">
       <Hero />
@@ -39,7 +44,6 @@ function App() {
       />
 
       {workout && <Workout workout={workout} />}
-      <div className="h-20" />
     </motion.main>
   );
 }
